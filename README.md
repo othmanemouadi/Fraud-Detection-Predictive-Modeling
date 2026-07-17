@@ -1,125 +1,117 @@
-\# AV Fleet Telemetry Analytics
+# Fraud Detection using Machine Learning
 
+## Overview
 
+This repository contains an end-to-end machine learning project focused on detecting fraudulent financial transactions using supervised learning techniques. The project explores the complete machine learning workflow, from data preprocessing and exploratory data analysis to model training, evaluation, and performance optimization on highly imbalanced datasets.
 
-!\[Python](https://img.shields.io/badge/Python-3.x-blue)
+The primary objective is to develop models capable of accurately identifying fraudulent transactions while minimizing false negatives through appropriate evaluation metrics and threshold optimization.
 
-!\[SQL](https://img.shields.io/badge/SQL-Analytics-orange)
+---
 
-!\[ClickHouse](https://img.shields.io/badge/ClickHouse-Database-yellow)
+## Project Objectives
 
-!\[Data Engineering](https://img.shields.io/badge/Data-Engineering-green)
+- Perform exploratory data analysis (EDA) to understand transaction patterns.
+- Clean and preprocess raw transaction data.
+- Handle class imbalance using appropriate machine learning techniques.
+- Train and compare multiple classification models.
+- Evaluate model performance beyond overall accuracy.
+- Analyze feature importance and model interpretability.
+- Optimize prediction thresholds for fraud detection.
 
-\## Overview
+---
 
-This project demonstrates a simplified data engineering and analytics pipeline for autonomous vehicle telemetry data.
+## Machine Learning Models
 
-The goal is to simulate how telemetry signals from vehicles can be ingested, transformed, stored, and analyzed to generate fleet monitoring insights.
+The project currently evaluates multiple supervised learning algorithms, including:
 
-The project includes a Python ETL pipeline, a ClickHouse schema, and an analytics layer built with SQL queries.
+- Logistic Regression
+- Random Forest
+- XGBoost
 
+Additional models may be incorporated as the project evolves.
 
+---
 
-\## Architecture
+## Evaluation Metrics
 
+Because fraud detection datasets are typically highly imbalanced, model performance is evaluated using:
 
+- Recall
+- Precision
+- F1-Score
+- ROC-AUC
+- Precision-Recall AUC (PR-AUC)
+- Confusion Matrix
 
-Vehicle Telemetry Data  
+These metrics provide a more meaningful assessment than accuracy alone.
 
-↓  
+---
 
-Python ETL Pipeline  
+## Technologies
 
-↓  
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+- XGBoost
+- Matplotlib
+- Jupyter Notebook
 
-ClickHouse Database  
+---
 
-↓  
+## Repository Structure
 
-SQL Analytics Layer  
+```
+Fraud-Detection-Predictive-Modeling/
 
-↓  
+├── data/
+├── notebooks/
+├── models/
+├── reports/
+├── src/
+│   ├── preprocess.py
+│   ├── feature_engineering.py
+│   ├── train.py
+│   ├── evaluate.py
+│   └── predict.py
+├── requirements.txt
+├── README.md
+└── .gitignore
+```
 
-Fleet Monitoring KPIs  
+---
 
+## Current Development
 
+Current work includes:
 
-\## Repository Structure
+- Exploratory Data Analysis (EDA)
+- Data preprocessing
+- Feature engineering
+- Baseline model development
+- Model comparison
+- Threshold tuning
+- Performance evaluation
 
+Future improvements include hyperparameter optimization, explainable AI techniques, and deployment of the trained model through a lightweight inference API.
 
+---
 
-AV-fleet-telemetry-analytics  
+## Learning Goals
 
-├── analytics → telemetry KPI calculations  
+This project serves as an opportunity to strengthen practical skills in:
 
-├── etl → Python ETL scripts  
+- Machine Learning
+- Predictive Modeling
+- Data Preprocessing
+- Feature Engineering
+- Model Evaluation
+- Python for Data Science
 
-├── sql → SQL analytics queries  
+while building a complete end-to-end fraud detection workflow suitable for real-world datasets.
 
-├── schema.docx → database schema  
+---
 
-└── README.md  
+## License
 
-
-
-\## ETL Pipeline
-
-
-
-The ETL layer processes telemetry data using Python. It ingests raw signals, transforms them into structured datasets, and prepares them for analytics.
-
-
-
-\## Database
-
-
-
-Telemetry data is stored in ClickHouse, a columnar database optimized for analytics and large-scale telemetry workloads.
-
-
-
-\## Example SQL Query
-
-
-
-```sql
-
-SELECT
-
-vehicle\_id,
-
-AVG(speed) AS avg\_speed,
-
-COUNT(\*) AS telemetry\_points
-
-FROM telemetry\_data
-
-GROUP BY vehicle\_id
-
-ORDER BY avg\_speed DESC;
-
-Technologies
-
-
-
-Python
-
-SQL
-
-ClickHouse
-
-Git \& GitHub
-
-
-
-Author
-
-
-
-Othmane Mouadi
-
-MS Data Science Student
-
-Autonomous vehicle testing \& telemetry analytics
-
-
+This project is intended for educational and portfolio purposes.
