@@ -1,44 +1,51 @@
 import pandas as pd
 
 
-def compute_vehicle_summary(df):
+def compute_class_distribution(df):
     """
-    Compute per-vehicle performance KPIs.
+    Compute the distribution of legitimate and fraudulent transactions.
     """
 
-    summary = df.groupby("vehicle_id").agg(
-        avg_speed=("speed", "mean"),
-        max_speed=("speed", "max"),
-        min_speed=("speed", "min"),
-        total_records=("vehicle_id", "count")
+    summary = (
+        df.groupby("Class")
+        .agg(
+            total_transactions=("Class", "count"),
+            average_amount=("Amount", "mean"),
+            maximum_amount=("Amount", "max"),
+            minimum_amount=("Amount", "min"),
+        )
+        .reset_index()
     )
 
-    if "acceleration" in df.columns:
-        summary["hard_brake_events"] = (
-            df[df["acceleration"] < -3]
-            .groupby("vehicle_id")
-            .size()
-        )
-
-    if "disengagement_flag" in df.columns:
-        summary["total_disengagements"] = (
-            df.groupby("vehicle_id")["disengagement_flag"]
-            .sum()
-        )
-
-    return summary.fillna(0).reset_index()
-
-
-def compute_daily_trend(df):
-    """
-    Compute daily average speed trend.
-    """
-
-    df["date"] = pd.to_datetime(df["timestamp"]).dt.date
-
-    daily = df.groupby("date").agg(
-        avg_speed=("speed", "mean"),
-        total_events=("vehicle_id", "count")
+    summary["Class"] = summary["Class"].map(
+        {0: "Legitimate", 1: "Fraud"}
     )
 
-    return daily.reset_index()
+    return summary
+
+
+def compute_daily_transaction_trend(df):
+    """
+    Compute daily transaction statistics.
+    """
+
+    df = df.copy()
+
+    df["Date"] = pd.to_datetime(df["Time"], unit="s").dt.date
+
+    daily = (
+        df.groupby("Date")
+        .agg(
+            total_transactions=("Class", "count"),
+            fraud_transactions=("Class", "sum"),
+            average_amount=("Amount", "mean"),
+        )
+        .reset_index()
+    )
+
+    daily["fraud_rate"] = (
+        daily["fraud_transactions"]
+        / daily["total_transactions"]
+    )
+
+    return daily
